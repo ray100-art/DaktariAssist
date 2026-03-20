@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DaktariAssist — AI Clinical Second Opinion</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<!-- TOP NAVIGATION BAR -->
+<nav class="topbar">
+    <div class="topbar-left">
+        <div class="topbar-icon">🩺</div>
+        <div>
+            <div class="topbar-title">DaktariAssist</div>
+            <div class="topbar-sub">AI Clinical Second Opinion</div>
+        </div>
+    </div>
+    <div class="topbar-badge">For Clinicians Only</div>
+</nav>
+
+<!-- MAIN LAYOUT -->
+<div class="container">
+
+    <!-- LEFT PANEL: Patient Form -->
+    <div class="panel">
+        <div class="panel-header">📋 Patient Clinical Details</div>
+        <div class="panel-body">
+
+            <div class="form-group row-2">
+                <div>
+                    <label class="form-label">Age (years)</label>
+                    <input type="number" class="input-field" id="age" placeholder="e.g. 34">
+                </div>
+                <div>
+                    <label class="form-label">Sex</label>
+                    <select class="input-field" id="sex">
+                        <option value="">Select</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Chief Complaint</label>
+                <input type="text" class="input-field" id="chiefComplaint"
+                       placeholder="e.g. High fever for 4 days">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Duration of Symptoms</label>
+                <input type="text" class="input-field" id="duration"
+                       placeholder="e.g. 4 days, 2 weeks">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Symptoms (click all that apply)</label>
+                <div class="chip-group" id="symptomsContainer">
+                    <div class="chip" onclick="toggleChip(this)">Fever</div>
+                    <div class="chip" onclick="toggleChip(this)">Chills</div>
+                    <div class="chip" onclick="toggleChip(this)">Headache</div>
+                    <div class="chip" onclick="toggleChip(this)">Cough</div>
+                    <div class="chip" onclick="toggleChip(this)">Chest pain</div>
+                    <div class="chip" onclick="toggleChip(this)">Shortness of breath</div>
+                    <div class="chip" onclick="toggleChip(this)">Vomiting</div>
+                    <div class="chip" onclick="toggleChip(this)">Diarrhoea</div>
+                    <div class="chip" onclick="toggleChip(this)">Abdominal pain</div>
+                    <div class="chip" onclick="toggleChip(this)">Fatigue</div>
+                    <div class="chip" onclick="toggleChip(this)">Joint pain</div>
+                    <div class="chip" onclick="toggleChip(this)">Rash</div>
+                    <div class="chip" onclick="toggleChip(this)">Confusion</div>
+                    <div class="chip" onclick="toggleChip(this)">Jaundice</div>
+                    <div class="chip" onclick="toggleChip(this)">Night sweats</div>
+                    <div class="chip" onclick="toggleChip(this)">Weight loss</div>
+                    <div class="chip" onclick="toggleChip(this)">Neck stiffness</div>
+                    <div class="chip" onclick="toggleChip(this)">Dysuria</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Vitals</label>
+                <div class="row-2">
+                    <div class="vital-box">
+                        <div class="vital-label">Temp (°C)</div>
+                        <input type="text" class="vital-input" id="temperature" placeholder="e.g. 38.9">
+                    </div>
+                    <div class="vital-box">
+                        <div class="vital-label">BP (mmHg)</div>
+                        <input type="text" class="vital-input" id="bloodPressure" placeholder="e.g. 110/70">
+                    </div>
+                    <div class="vital-box">
+                        <div class="vital-label">HR (bpm)</div>
+                        <input type="text" class="vital-input" id="heartRate" placeholder="e.g. 102">
+                    </div>
+                    <div class="vital-box">
+                        <div class="vital-label">SpO2 (%)</div>
+                        <input type="text" class="vital-input" id="spo2" placeholder="e.g. 97">
+                    </div>
+                    <div class="vital-box">
+                        <div class="vital-label">RR (breaths/min)</div>
+                        <input type="text" class="vital-input" id="respiratoryRate" placeholder="e.g. 22">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Relevant Medical History</label>
+                <div class="chip-group" id="historyContainer">
+                    <div class="chip" onclick="toggleChip(this)">Diabetes</div>
+                    <div class="chip" onclick="toggleChip(this)">Hypertension</div>
+                    <div class="chip" onclick="toggleChip(this)">HIV+</div>
+                    <div class="chip" onclick="toggleChip(this)">TB history</div>
+                    <div class="chip" onclick="toggleChip(this)">Pregnancy</div>
+                    <div class="chip" onclick="toggleChip(this)">Sickle cell</div>
+                    <div class="chip" onclick="toggleChip(this)">Asthma</div>
+                    <div class="chip" onclick="toggleChip(this)">None</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Your Proposed Diagnosis</label>
+                <input type="text" class="input-field" id="proposedDiagnosis"
+                       placeholder="e.g. Malaria, Typhoid, Pneumonia">
+            </div>
+
+            <button class="btn-analyse" id="analyseBtn" onclick="analyse()">
+                🔍 Analyse with AI
+            </button>
+
+        </div>
+    </div>
+
+    <!-- RIGHT PANEL: AI Result -->
+    <div class="panel">
+        <div class="panel-header">🧠 AI Second Opinion</div>
+        <div class="panel-body">
+
+            <!-- Empty state -->
+            <div id="emptyState" class="empty-state">
+                <div class="empty-icon">🧠</div>
+                <div class="empty-title">Ready to assist</div>
+                <div class="empty-sub">Fill in the patient details<br>and click <strong>Analyse with AI</strong></div>
+            </div>
+
+            <!-- Loading state -->
+            <div id="loadingState" class="loading-state">
+                <div class="spinner"></div>
+                <div class="loading-text">AI is reviewing the clinical picture...</div>
+                <div class="loading-sub">This takes about 3 seconds</div>
+            </div>
+
+            <!-- Result panel -->
+            <div id="resultPanel" class="result-panel">
+
+                <div id="consistencyBar" class="consistency-bar cb-amber">
+                    <div class="cb-icon">⚠️</div>
+                    <div>
+                        <div class="cb-title">Awaiting analysis</div>
+                        <div class="cb-desc">Results will appear here</div>
+                    </div>
+                </div>
+
+                <div class="result-section">
+                    <div class="section-title">
+                        <span class="dot dot-red"></span> Red Flags Detected
+                    </div>
+                    <div id="redFlagsContent"></div>
+                </div>
+
+                <div class="result-section">
+                    <div class="section-title">
+                        <span class="dot dot-blue"></span> Differential Diagnoses to Consider
+                    </div>
+                    <div id="differentialsContent"></div>
+                </div>
+
+                <div class="result-section">
+                    <div class="section-title">
+                        <span class="dot dot-green"></span> Recommended Confirmatory Tests
+                    </div>
+                    <div id="testsContent"></div>
+                </div>
+
+                <div class="result-section">
+                    <div class="section-title">
+                        <span class="dot dot-amber"></span> Suggested Follow-up Question
+                    </div>
+                    <div class="followup-box" id="followupContent"></div>
+                </div>
+
+                <div class="result-section">
+                    <div class="section-title">
+                        <span class="dot dot-blue"></span> Ask AI a Follow-up
+                    </div>
+                    <div class="chat-row">
+                        <input type="text" class="chat-input" id="chatInput"
+                               placeholder="e.g. What if the patient also has a rash?"
+                               onkeydown="if(event.key==='Enter') askFollowup()">
+                        <button class="chat-btn" onclick="askFollowup()">Ask</button>
+                    </div>
+                    <div id="chatResponse" class="chat-response"></div>
+                </div>
+
+            </div>
+
+            <!-- Error state -->
+            <div id="errorState" class="error-state">
+                <div class="error-icon">⚠️</div>
+                <div id="errorMessage" class="error-text">Something went wrong. Please try again.</div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    DaktariAssist &nbsp;|&nbsp; AI Clinical Decision Support
+    &nbsp;|&nbsp; AI does not replace professional clinical judgement.
+</div>
+
+<!-- JavaScript — loaded last so HTML is ready first -->
+<script src="/js/app.js"></script>
+
+</body>
+</html>
