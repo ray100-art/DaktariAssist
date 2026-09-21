@@ -9,7 +9,7 @@ It does not replace the clinician. It gives a structured, respectful second opin
 takes the local disease burden into account: malaria, typhoid, TB, HIV, brucellosis,
 meningitis and other conditions common in sub-Saharan Africa.
 
-![Java](https://img.shields.io/badge/Java-21-orange) ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.3-6DB33F) ![LLM](https://img.shields.io/badge/LLM-Llama_3.3_70B_via_Groq-555)
+[![Build](https://github.com/ray100-art/DaktariAssist/actions/workflows/build.yml/badge.svg)](https://github.com/ray100-art/DaktariAssist/actions/workflows/build.yml) ![Java](https://img.shields.io/badge/Java-21-orange) ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.3-6DB33F) ![LLM](https://img.shields.io/badge/LLM-Llama_3.3_70B_via_Groq-555)
 
 ## What it returns
 
